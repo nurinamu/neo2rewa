@@ -10,7 +10,7 @@ import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.veckon.hack.neo2rewa.datastore.Supply;
 
-@Api(name="supplyApi",version="v1")
+@Api(name="neo2rewa",version="v1")
 public class SupplyApi {
 	@ApiMethod(path="/supply",httpMethod=HttpMethod.GET)
 	public List<Supply> findAll(@Named("id") String id){

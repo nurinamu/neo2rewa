@@ -10,7 +10,7 @@ import com.veckon.hack.neo2rewa.datastore.User;
 
 import static com.veckon.hack.neo2rewa.objectify.OfyService.ofy;
 
-@Api(name="userApi",version="v1")
+@Api(name="neo2rewa",version="v1")
 public class UserApi {
 @ApiMethod(path="/user",httpMethod=HttpMethod.GET)
 	public List<User> findAll(@Named("id") String id){

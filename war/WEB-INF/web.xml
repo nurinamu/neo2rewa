@@ -3,10 +3,6 @@
 		<servlet-name>Neo2rewa</servlet-name>
 		<servlet-class>com.veckon.hack.neo2rewa.Neo2rewaServlet</servlet-class>
 	</servlet>
-	<servlet-mapping>
-		<servlet-name>Neo2rewa</servlet-name>
-		<url-pattern>/neo2rewa</url-pattern>
-	</servlet-mapping>
  	<filter>
 		<filter-name>ObjectifyFilter</filter-name>
 		<filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
@@ -16,19 +12,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-<!-- 	<filter>
-		<filter-name>SparkFilter</filter-name>
-		<filter-class>spark.servlet.SparkFilter</filter-class>
-		<init-param>
-			<param-name>applicationClass</param-name>
-			<param-value>com.veckon.hack.neo2rewa.AppConfig</param-value>
-		</init-param>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>SparkFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping> -->
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

@@ -6,8 +6,10 @@ import java.util.Map;
 import com.google.appengine.api.datastore.Text;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.EmbedMap;
+import com.googlecode.objectify.annotation.Entity;
 
 
+@Entity
 public class Disaster extends EntityData{
     
     long issueDate;

@@ -1,7 +1,14 @@
+.idea
 .project
 .settings
 .classes
 **/*.class
+war/WEB-INF/appengine-*
 war/WEB-INF/classes
-war/WEB-INF/lib
+war/WEB-INF/lib/appengine-*
+war/WEB-INF/lib/data*
+war/WEB-INF/lib/gero*
+war/WEB-INF/lib/asm*
+war/WEB-INF/lib/j*
+war/WEB-INF/*.api
 **/.DS_Store
