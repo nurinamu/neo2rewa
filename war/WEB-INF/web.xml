@@ -20,7 +20,7 @@
   <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
   <init-param>
    <param-name>services</param-name>
-   <param-value>com.veckon.hack.neo2rewa.api.DisasterApi,com.veckon.hack.neo2rewa.api.SupplyApi,com.veckon.hack.neo2rewa.api.UserApi</param-value>
+   <param-value>com.veckon.hack.neo2rewa.api.DisasterApi,com.veckon.hack.neo2rewa.api.LoginApi,com.veckon.hack.neo2rewa.api.SupplyApi,com.veckon.hack.neo2rewa.api.UserApi</param-value>
   </init-param>
  </servlet>
  <servlet-mapping>
