@@ -19,7 +19,7 @@ public class SupplyApi {
 		if("".equals(type)){
 			return ofy().load().type(Supply.class).list();
 		}else{
-			return ofy().load().type(Supply.class).filter("type", type).list();
+			return ofy().load().type(Supply.class).filter("type =", type).list();
 		}
 	}
 	@ApiMethod(path="/supply/{id}",httpMethod=HttpMethod.GET)

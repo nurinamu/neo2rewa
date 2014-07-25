@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>구호물품 등록 페이지입니다.</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script>
+        function init(){
+            var ROOT = '/_ah/api';
+            gapi.client.load('neo2rewa', 'v1', function() {
+                initFunc();
+            }, ROOT);
+        }
+
+        function initFunc(){
+            $('#submitBtn').click(function(){
+                gapi.client.neo2rewa.supplyApi.save({
+                    'name':$('#supName').val(),
+                    'type':$('#supType').val(),
+                    'description':$('#supDesc').val()
+                }).execute(function(resp){
+                            console.log(resp);
+                            alert('구호물품이 등록되었습니다.');
+                            clear();
+                        });
+            });
+        }
+        function clear(){
+            $('#supName').val('');
+            $('#supType').val('');
+            $('#supDesc').val('');
+        }
+    </script>
+</head>
+<body>
+
+
+<div class="row"><div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+    <form role="form">
+        <div class="form-group">
+            <label for="supName">구호품명</label>
+            <input type="text" class="form-control" id="supName" placeholder="구호품명을 입력해주세요.">
+        </div>
+        <div class="form-group">
+            <label for="supType">종류</label>
+            <select class="form-control" id="supType">
+                <option value="">선택하세요</option>
+                <option value="DRINKING">음료</option>
+                <option value="FOOD">식품</option>
+                <option value="CLOTH">의류</option>
+                <option value="MEDICINE">의약품</option>
+                <option value="ETC">기타</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="supDesc">설명</label>
+            <textarea class="form-control" id="supDesc" placeholder="이름을 입력하세요"></textarea>
+        </div>
+        <button type="button" class="btn btn-default" id="submitBtn">Submit</button>
+    </form>
+</div></div>
+
+
+
+<script src="https://apis.google.com/js/client.js?onload=init"></script>
+</body>
+</html>

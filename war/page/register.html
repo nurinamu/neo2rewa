@@ -43,6 +43,7 @@
                     email:$('#userEmail').val(),
                     permission:'USER'
                 }).execute(function(resp){
+                            console.log(resp);
                             alert('사용자가 등록되었습니다.');
                             clear();
                         });

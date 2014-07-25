@@ -20,7 +20,58 @@
         }
 
         function initFunc(){
+            $('#addSup').click(addSupplyRow);
+            addSupplyRow();
 
+            $('#addVt').click(addVTRow);
+            addVTRow();
+
+        }
+
+        var supplyCnt = 0;
+        var vtCnt = 0;
+
+        function addSupplyRow(){
+            var sRowHTML = "<tr height=\"40\">"
+                    +"<td width=\"150\">구호품 종류</td>"
+                    +"<td width=\"220\"><select type=\"text\" class=\"form-control\" style=\"width:200px;\" id=\"supType_"+supplyCnt+"\">" +
+                    "<option value=\"none\">선택하세요</option>" +
+                    "<option value=\"DRINKING\">음료</option>" +
+                    "<option value=\"FOOD\">식품</option>" +
+                    "<option value=\"CLOTH\">의류</option>" +
+                    "<option value=\"MEDICINE\">의약품</option>" +
+                    "<option value=\"ETC\">기타</option>" +
+                    "</select></td>"
+                    +"<td width=\"220\"><select type=\"text\" class=\"form-control\" style=\"width:200px;\" id=\"supName_"+supplyCnt+"\">" +
+                    "</select></td>"
+                    +"<td width=\"100\">필요수량</td>"
+                    +"<td width=\"60\"><input type=\"text\" class=\"form-control\" style=\"width:50px;\" id=\"supCnt_"+supplyCnt+"\"></td>"
+                    +"<td></td></tr>";
+            $(sRowHTML).appendTo($('#supplyTab'));
+
+            $('#supType_'+supplyCnt).change(function(){
+                gapi.client.neo2rewa.supplyApi.findAll({type:$(this).val()}).execute(function(resp){
+                    $('#supName_'+supplyCnt).appendChild($());
+                });
+            });
+            supplyCnt++;
+        }
+
+        function addVTRow(){
+            var vtRowHTML = "<tr height=\"40\">"
+                    +"<td width=\"150\">구호인력 특기</td>"
+            +"<td width=\"220\"><select type=\"text\" class=\"form-control\" style=\"width:200px;\" name=\"vtType"+vtCnt+"\"></select></td>"
+            +"<td width=\"100\">필요인원</td>"
+                    +"<td width=\"60\"><input type=\"text\" class=\"form-control\" style=\"width:50px;\" name=\"vtName"+vtCnt+"\"></td>"
+                    +"<td></td>"
+                    +"</tr>"
+                    +"<tr height=\"90\">"
+                    +"<td width=\"150\">요구 사항</td>"
+            +"<td colspan=\"3\"><textarea class=\"form-control\" rows=\"3\" hname=\"vtDesc"+vtCnt+"\"></textarea></td>"
+                    +"<td></td>"
+            +"</tr>";
+            $(vtRowHTML).appendTo($('#vtTab'));
+            vtCnt++;
         }
 
         function initialize() {
@@ -86,6 +137,11 @@
 </head>
 <body>
 <div class="row">
+    <div class="page-header col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+        <h1>재난 정보 등록 <small>재난 구호를 위한 정보를 입력바랍니다.</small></h1>
+    </div>
+</div>
+<div class="row">
     <div class="col-xs-6 col-sm-5 col-sm-offset-1 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2">
         <div>
             <form role="form">
@@ -117,16 +173,16 @@
         <div id="map-canvas"></div>
     </div>
 </div>
+
 <div class="row">
+    <div class="page-header col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-2">
+        <h2>구호품 정보 등록 <small>필요 구호품 정보를 입력바랍니다.</small></h2>
+    </div>
+</div>
+<div class="row" style="margin-bottom: 20px;">
     <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-2">
         <table width="100%" id="supplyTab">
-            <tr>
-                <td width="150">구호품 종류</td>
-                <td width="220"><select type="text" class="form-control" style="width:200px;" name="supKind"></select></td>
-                <td width="100">필요수량</td>
-                <td width="60"><input type="text" class="form-control" style="width:50px;" name="supName"></td>
-                <td></td>
-            </tr>
+
 
         </table>
     </div>
@@ -136,23 +192,21 @@
 </div>
 
 <div class="row">
+    <div class="page-header col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-2">
+        <h2>구호인력 정보 등록 <small>필요 구호인력 정보를 입력바랍니다.</small></h2>
+    </div>
+</div>
+<div class="row" style="margin-bottom: 20px;">
     <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-2">
         <table width="100%" id="vtTab">
-            <tr>
-                <td width="150">봉사자 특기</td>
-                <td width="220"><select type="text" class="form-control" style="width:200px;" name="vtType"></select></td>
-                <td width="100">필요인원</td>
-                <td width="60"><input type="text" class="form-control" style="width:50px;" name="vtName"></td>
-                <td></td>
-            </tr>
 
         </table>
     </div>
     <div class="col-sm-2 col-md-2 col-lg-1">
-        <button type="button" class="btn btn-primary" id="addVt">봉사자 추가</button>
+        <button type="button" class="btn btn-primary" id="addVt">구호인력 추가</button>
     </div>
 </div>
-<div width="100%">
+<div width="100%" style="margin-bottom: 20px;">
     <table width="100%">
         <tr>
             <td align="center"><button type="button" class="btn btn-danger" id="submitBtn">재난 등록</button></td>

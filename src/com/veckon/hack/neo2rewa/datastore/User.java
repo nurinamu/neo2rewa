@@ -1,14 +1,17 @@
 package com.veckon.hack.neo2rewa.datastore;
 
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class User extends EntityData{
     
     String name;
     String phone;
+    @Index
     String email;
     String password;
+    @Index
     Permission permission;
    
 	public enum Permission{
