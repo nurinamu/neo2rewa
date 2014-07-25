@@ -18,13 +18,13 @@ public class LoginApi {
 
 @ApiMethod(path="/login",httpMethod=HttpMethod.POST)
 	public Login login(User user){
-//		User userinfo = ofy().load().type(User.class).filter("name", user.getName()).first().now();
-//		if(userinfo == null) {
-//			return new Login(false,"fail","not exist loginid");
-//		}
-//		if(!userinfo.getPassword().equals(user.getPassword())) {
-//			return new Login(false,"fail","not correct password");
-//		}
+		User userinfo = ofy().load().type(User.class).filter("name", user.getName()).first().now();
+		if(userinfo == null) {
+			return new Login(false,"fail","not exist loginid");
+		}
+		if(!userinfo.getPassword().equals(user.getPassword())) {
+			return new Login(false,"fail","not correct password");
+		}
 		return new Login(true,"success",null);
 	}
 }
