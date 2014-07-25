@@ -1,5 +1,7 @@
 package com.veckon.hack.neo2rewa.objectify;
 
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 
 public class OfyService {
@@ -8,10 +10,10 @@ public class OfyService {
 		
 	}
 	
-	public static Ofy ofy(){
-		return (Ofy) ObjectifyService.ofy();
+	public static Objectify ofy(){
+		return ObjectifyService.ofy();
 	}
-	public static OfyFactory factory(){
-		return (OfyFactory) ObjectifyService.factory();
+	public static ObjectifyFactory factory(){
+		return ObjectifyService.factory();
 	}
 }
