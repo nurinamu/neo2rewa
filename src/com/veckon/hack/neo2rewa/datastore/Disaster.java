@@ -13,10 +13,12 @@ import com.googlecode.objectify.annotation.Entity;
 public class Disaster extends EntityData{
     
     long issueDate;
-    long geoX;
-    long geoY;
+    String geoX;
+    String geoY;
     Text description;
     DisasterType type;
+    Key<User> owner;
+    String area;
     
     @EmbedMap
     Map<Key<Supply>, Long> needSupplies;
@@ -27,17 +29,7 @@ public class Disaster extends EntityData{
     @EmbedMap
     Map<Key<Supply>, Long> usedSupplies;
     
-    @EmbedMap
-    Map<String, List<User>> needVolunteers;
-    
-    @EmbedMap
-    Map<String, List<User>> haveVolunteers;
-    
-    @EmbedMap
-    Map<String, List<User>> activeVolunteers;
-    
-    @EmbedMap
-    Map<String, List<User>> quitVolunteers;
+    List<Key<Job>> jobs;
     
     public enum DisasterType{
         NATURAL, ACCIDENT
@@ -51,19 +43,19 @@ public class Disaster extends EntityData{
         this.issueDate = issueDate;
     }
 
-    public long getGeoX() {
+    public String getGeoX() {
         return geoX;
     }
 
-    public void setGeoX(long geoX) {
+    public void setGeoX(String geoX) {
         this.geoX = geoX;
     }
 
-    public long getGeoY() {
+    public String getGeoY() {
         return geoY;
     }
 
-    public void setGeoY(long geoY) {
+    public void setGeoY(String geoY) {
         this.geoY = geoY;
     }
 
@@ -107,35 +99,29 @@ public class Disaster extends EntityData{
         this.usedSupplies = usedSupplies;
     }
 
-    public Map<String, List<User>> getNeedVolunteers() {
-        return needVolunteers;
+
+    public Key<User> getOwner() {
+        return owner;
     }
 
-    public void setNeedVolunteers(Map<String, List<User>> needVolunteers) {
-        this.needVolunteers = needVolunteers;
+    public void setOwner(Key<User> owner) {
+        this.owner = owner;
     }
 
-    public Map<String, List<User>> getHaveVolunteers() {
-        return haveVolunteers;
+    public String getArea() {
+        return area;
     }
 
-    public void setHaveVolunteers(Map<String, List<User>> haveVolunteers) {
-        this.haveVolunteers = haveVolunteers;
+    public void setArea(String area) {
+        this.area = area;
     }
 
-    public Map<String, List<User>> getActiveVolunteers() {
-        return activeVolunteers;
+    public List<Key<Job>> getJobs() {
+        return jobs;
     }
 
-    public void setActiveVolunteers(Map<String, List<User>> activeVolunteers) {
-        this.activeVolunteers = activeVolunteers;
+    public void setJobs(List<Key<Job>> jobs) {
+        this.jobs = jobs;
     }
 
-    public Map<String, List<User>> getQuitVolunteers() {
-        return quitVolunteers;
-    }
-
-    public void setQuitVolunteers(Map<String, List<User>> quitVolunteers) {
-        this.quitVolunteers = quitVolunteers;
-    }
 }

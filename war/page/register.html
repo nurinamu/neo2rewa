@@ -37,11 +37,11 @@
                 }
 
                 gapi.client.neo2rewa.userApi.save({
-                    name:$('#userName').val(),
+                    name:encodeURIComponent($('#userName').val()),
                     password:$('#userPwd').val(),
                     phone:$('#userPhone').val(),
                     email:$('#userEmail').val(),
-                    permission:'USER'
+                    permission:$('#userType').val()
                 }).execute(function(resp){
                             console.log(resp);
                             alert('사용자가 등록되었습니다.');
@@ -78,6 +78,14 @@
             <label for="userEmail">Phone</label>
             <input type="email" class="form-control" id="userPhone" placeholder="전화번호를 입력하세요">
         </div>
+        <div class="form-group">
+            <label for="userType">구분</label>
+            <select class="form-control" id="userType">
+                <option value="USER">일반</option>
+                <option value="ADMIN">담당자</option>
+            </select>
+        </div>
+
         <button type="button" class="btn btn-default" id="submitBtn">Submit</button>
     </form>
 </div></div>

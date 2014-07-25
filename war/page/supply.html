@@ -16,9 +16,9 @@
         function initFunc(){
             $('#submitBtn').click(function(){
                 gapi.client.neo2rewa.supplyApi.save({
-                    'name':$('#supName').val(),
+                    'name':encodeURIComponent($('#supName').val()),
                     'type':$('#supType').val(),
-                    'description':$('#supDesc').val()
+                    'description':encodeURIComponent($('#supDesc').val())
                 }).execute(function(resp){
                             console.log(resp);
                             alert('구호물품이 등록되었습니다.');
