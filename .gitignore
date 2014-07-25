@@ -4,3 +4,4 @@
 **/*.class
 war/WEB-INF/classes
 war/WEB-INF/lib
+**/.DS_Store
