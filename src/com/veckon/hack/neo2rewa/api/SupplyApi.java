@@ -9,6 +9,7 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.DefaultValue;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
+import com.veckon.hack.neo2rewa.datastore.Result;
 import com.veckon.hack.neo2rewa.datastore.Supply;
 
 @Api(name="neo2rewa",version="v1")
@@ -27,12 +28,24 @@ public class SupplyApi {
 	}
 	
 	@ApiMethod(path="/supply",httpMethod=HttpMethod.POST)
-	public void save(Supply supply){
+	public Result save(Supply supply){
 		ofy().save().entity(supply).now();
+		Supply getSupply = ofy().load().entity(supply).now();
+		if(getSupply != null){
+			return new Result("success",supply.getId());
+		}else{
+			return new Result("fail","confirm App Engine Server");
+		}
 	}
 
 	@ApiMethod(path="/supply",httpMethod=HttpMethod.DELETE)
-	public void delete(@Named("id") String id){
+	public Result delete(@Named("id") String id){
 		ofy().delete().type(Supply.class).id(Long.parseLong(id)).now();
+		Supply getSupply = ofy().load().type(Supply.class).filterKey(id).first().now();
+		if(getSupply == null){
+			return new Result("success",id);
+		}else{
+			return new Result("fail","confirm App Engine Server");
+		}
 	}
 }

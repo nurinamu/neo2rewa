@@ -9,6 +9,7 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 import com.veckon.hack.neo2rewa.datastore.Disaster;
+import com.veckon.hack.neo2rewa.datastore.Result;
 
 @Api(name="neo2rewa",version="v1")
 public class DisasterApi {
@@ -22,12 +23,24 @@ public class DisasterApi {
 	}
 	
 	@ApiMethod(path="/disaster",httpMethod=HttpMethod.POST)
-	public void save(Disaster disaster){
+	public Result save(Disaster disaster){
 		ofy().save().entity(disaster).now();
+		Disaster getDisaster = ofy().load().entity(disaster).now();
+		if(getDisaster != null){
+			return new Result("success",getDisaster.getId());
+		}else{
+			return new Result("fail","confirm App Engine Server");
+		}
 	}
 
 	@ApiMethod(path="/disaster",httpMethod=HttpMethod.DELETE)
-	public void delete(@Named("id") String id){
+	public Result delete(@Named("id") String id){
 		ofy().delete().type(Disaster.class).id(Long.parseLong(id)).now();
+		Disaster getUser = ofy().load().type(Disaster.class).filterKey(id).first().now();
+		if(getUser == null){
+			return new Result("success",id);
+		}else{
+			return new Result("fail","confirm App Engine Server");
+		}
 	}
 }

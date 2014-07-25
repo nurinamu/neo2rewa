@@ -10,8 +10,8 @@ public class User extends EntityData{
     String email;
     String password;
     Permission permission;
-    
-    public enum Permission{
+   
+	public enum Permission{
         ADMIN,USER
     }
 

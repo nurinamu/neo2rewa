@@ -6,6 +6,7 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
+import com.veckon.hack.neo2rewa.datastore.Result;
 import com.veckon.hack.neo2rewa.datastore.User;
 
 import static com.veckon.hack.neo2rewa.objectify.OfyService.ofy;
@@ -22,19 +23,24 @@ public class UserApi {
 	}
 	
 	@ApiMethod(path="/user",httpMethod=HttpMethod.POST)
-	public String save(User user){
+	public Result save(User user){
 		ofy().save().entity(user).now();
 		User getUser = ofy().load().entity(user).now();
 		if(getUser != null){
-			return getUser.getName();
+			return new Result("success",getUser.getName());
 		}else{
-			return "error";
+			return new Result("fail","confirm App Engine Server");
 		}
 	}
 
 	@ApiMethod(path="/user",httpMethod=HttpMethod.DELETE)
-	public String delete(@Named("id") String id){
+	public Result delete(@Named("id") String id){
 		ofy().delete().type(User.class).id(Long.parseLong(id)).now();
-		return id;
+		User getUser = ofy().load().type(User.class).filterKey(id).first().now();
+		if(getUser == null){
+			return new Result("success",id);
+		}else{
+			return new Result("fail","confirm App Engine Server");
+		}
 	}
 }
