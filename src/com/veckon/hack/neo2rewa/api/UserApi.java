@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
+import com.google.api.server.spi.config.DefaultValue;
 import com.google.api.server.spi.config.Named;
 import com.veckon.hack.neo2rewa.datastore.Result;
 import com.veckon.hack.neo2rewa.datastore.User;
@@ -14,8 +15,12 @@ import static com.veckon.hack.neo2rewa.objectify.OfyService.ofy;
 @Api(name="neo2rewa",version="v1")
 public class UserApi {
 @ApiMethod(path="/user",httpMethod=HttpMethod.GET)
-	public List<User> findAll(){
-		return ofy().load().type(User.class).list();
+	public List<User> findAll(@Named(value="permision") @DefaultValue(value="") String permission){
+		if("".equals(permission)){
+			return ofy().load().type(User.class).list();
+		}else{
+			return ofy().load().type(User.class).filter("permission", permission).list();
+		}
 	}
 	@ApiMethod(path="/user/{id}",httpMethod=HttpMethod.GET)
 	public User findOne(@Named("id") String id){
