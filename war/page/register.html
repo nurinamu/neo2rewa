@@ -2,23 +2,85 @@
 <html>
 <head>
     <title>사용자 등록 페이지입니다.</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script>
         function init(){
             var ROOT = '/_ah/api';
             gapi.client.load('neo2rewa', 'v1', function() {
-                console.log("userAPI is loaded.");
+                initFunc();
+            }, ROOT);
+        }
+
+        function initFunc(){
+            $('#submitBtn').click(function(){
+                if($('#userEmail').val().length < 1){
+                    $('#userEmail').focus();
+                    alert('메일 주소를 입력해주십시요.');
+                    return;
+                }
+                if($('#userPwd').val().length < 1){
+                    $('#userPwd').focus();
+                    alert('비밀번호를 입력해주십시요.');
+                    return;
+                }
+                if($('#userName').val().length < 1){
+                    $('#userName').focus();
+                    alert('이름을 입력해주십시요.');
+                    return;
+                }
+                if($('#userPhone').val().length < 1){
+                    $('#userPhone').focus();
+                    alert('전화번호를 입력해주십시요.');
+                    return;
+                }
 
                 gapi.client.neo2rewa.userApi.save({
-                    'name':'nurinamu', 'phone':'010-1111-1111', 'email':'asdf@asdf.com', 'password':'asdfasdf', 'permission':'USER'
+                    name:$('#userName').val(),
+                    password:$('#userPwd').val(),
+                    phone:$('#userPhone').val(),
+                    email:$('#userEmail').val(),
+                    permission:'USER'
                 }).execute(function(resp){
-                    console.log(resp);
-                });
-
-            }, ROOT);
+                            alert('사용자가 등록되었습니다.');
+                            clear();
+                        });
+            });
+        }
+        function clear(){
+            $('#userEmail').val('');
+            $('#userPwd').val('');
+            $('#userPhone').val('');
+            $('#userName').val('');
         }
     </script>
 </head>
 <body>
+
+
+<div class="row"><div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+    <form role="form">
+        <div class="form-group">
+            <label for="userEmail">Email address</label>
+            <input type="email" class="form-control" id="userEmail" placeholder="메일주소를 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="userPwd">Password</label>
+            <input type="password" class="form-control" id="userPwd" placeholder="비밃번호를 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="userName">Name</label>
+            <input type="text" class="form-control" id="userName" placeholder="이름을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="userEmail">Phone</label>
+            <input type="email" class="form-control" id="userPhone" placeholder="전화번호를 입력하세요">
+        </div>
+        <button type="button" class="btn btn-default" id="submitBtn">Submit</button>
+    </form>
+</div></div>
+
 
 
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
