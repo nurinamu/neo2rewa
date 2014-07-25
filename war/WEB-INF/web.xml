@@ -3,7 +3,11 @@
 		<servlet-name>Neo2rewa</servlet-name>
 		<servlet-class>com.veckon.hack.neo2rewa.Neo2rewaServlet</servlet-class>
 	</servlet>
- 	<filter>
+	<servlet-mapping>
+		<servlet-name>Neo2rewa</servlet-name>
+		<url-pattern>/hello</url-pattern>
+	</servlet-mapping>
+  	<filter>
 		<filter-name>ObjectifyFilter</filter-name>
 		<filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
 	</filter>

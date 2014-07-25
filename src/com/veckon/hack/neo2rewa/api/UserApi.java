@@ -22,12 +22,19 @@ public class UserApi {
 	}
 	
 	@ApiMethod(path="/user",httpMethod=HttpMethod.POST)
-	public void save(User supply){
-		ofy().save().entity(supply).now();
+	public String save(User user){
+		ofy().save().entity(user).now();
+		User getUser = ofy().load().entity(user).now();
+		if(getUser != null){
+			return getUser.getName();
+		}else{
+			return "error";
+		}
 	}
 
 	@ApiMethod(path="/user",httpMethod=HttpMethod.DELETE)
-	public void delete(@Named("id") String id){
+	public String delete(@Named("id") String id){
 		ofy().delete().type(User.class).id(Long.parseLong(id)).now();
+		return id;
 	}
 }
