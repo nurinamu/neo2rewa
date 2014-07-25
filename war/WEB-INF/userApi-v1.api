@@ -1,0 +1,148 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://neo2rewa.appspot.com/_ah/api",
+  "name" : "userApi",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "adapter" : {
+    "bns" : "https://neo2rewa.appspot.com/_ah/spi",
+    "deadline" : 65.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "methods" : {
+    "userApi.userApi.findOne" : {
+      "path" : "/user/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.veckon.hack.neo2rewa.api.UserApi.findOne",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "userApi.userApi.save" : {
+      "path" : "/user",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.veckon.hack.neo2rewa.api.UserApi.save",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "userApi.userApi.findAll" : {
+      "path" : "/user",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.veckon.hack.neo2rewa.api.UserApi.findAll",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "userApi.userApi.delete" : {
+      "path" : "/user",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.veckon.hack.neo2rewa.api.UserApi.delete",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "User" : {
+        "id" : "User",
+        "type" : "object",
+        "properties" : {
+        }
+      },
+      "UserCollection" : {
+        "id" : "UserCollection",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "User"
+            }
+          }
+        }
+      }
+    },
+    "methods" : {
+      "com.veckon.hack.neo2rewa.api.UserApi.findOne" : {
+        "response" : {
+          "$ref" : "User"
+        }
+      },
+      "com.veckon.hack.neo2rewa.api.UserApi.save" : {
+        "request" : {
+          "$ref" : "User"
+        }
+      },
+      "com.veckon.hack.neo2rewa.api.UserApi.findAll" : {
+        "response" : {
+          "$ref" : "UserCollection"
+        }
+      },
+      "com.veckon.hack.neo2rewa.api.UserApi.delete" : {
+      }
+    }
+  }
+}
