@@ -27,5 +27,22 @@
     stale session data. For details, see
     http://code.google.com/appengine/docs/java/config/appconfig.html#Enabling_Sessions
   -->
+  <static-files>
+      <include path="/**.png" />
+      <include path="/**.ico" />
+      <include path="/**.PNG" />
+      <include path="/**.css" />
+      <include path="/**.mp3" />
+      <include path="/**.ogg" />
+      <include path="/**.js" />
+      <include path="/**.jpg" />
+      <include path="/**.gif" />
+      <include path="/**.html" />
+      <include path="/**.woff" />
+      <include path="/**.eot" />
+      <include path="/**.ttf" />
+      <include path="/**.svg" />
+      <include path="/**.swf" />
+  </static-files>
 
 </appengine-web-app>
