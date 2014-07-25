@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>재난 등록 페이지입니다.</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+    <script>
+        var map;
+
+        var disasterLocation;
+
+        function init(){
+            var ROOT = '/_ah/api';
+            gapi.client.load('neo2rewa', 'v1', function() {
+                initFunc();
+            }, ROOT);
+        }
+
+        function initFunc(){
+
+        }
+
+        function initialize() {
+            var mapOptions = {
+                zoom: 14
+            };
+            map = new google.maps.Map(document.getElementById('map-canvas'),
+                    mapOptions);
+
+            var infowindow;
+
+            // Try HTML5 geolocation
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = new google.maps.LatLng(position.coords.latitude,
+                            position.coords.longitude);
+
+                    infowindow = new google.maps.InfoWindow({
+                        map: map,
+                        position: pos,
+                        content: '재난 위치를 클릭 해주십시요.'
+                    });
+
+                    map.setCenter(pos);
+                }, function() {
+                    handleNoGeolocation(true);
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleNoGeolocation(false);
+            }
+
+            google.maps.event.addListener(map, 'click', function(evt) {
+                //console.log("event!!!->"+event.pageX);
+                infowindow.setPosition(evt.latLng);
+                infowindow.setContent('재난 위치');
+                map.setCenter(evt.latLng);
+
+                disasterLocation = evt.latLng;
+            });
+
+            $('#map-canvas').css('height','500px');
+        }
+
+        function handleNoGeolocation(errorFlag) {
+            if (errorFlag) {
+                var content = 'Error: The Geolocation service failed.';
+            } else {
+                var content = 'Error: Your browser doesn\'t support geolocation.';
+            }
+
+            var options = {
+                map: map,
+                position: new google.maps.LatLng(60, 105),
+                content: content
+            };
+
+            var infowindow = new google.maps.InfoWindow(options);
+            map.setCenter(options.position);
+        }
+
+    </script>
+</head>
+<body>
+<div class="row">
+    <div class="col-xs-6 col-sm-5 col-sm-offset-1 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2">
+        <div>
+            <form role="form">
+                <div class="form-group">
+                    <label for="dsDesc">재난 개요</label>
+                    <textarea class="form-control" id="dsDesc" placeholder="재난 상세 개요를 입력해주십시요." rows="12"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="dsType">재난 구분</label>
+                    <select class="form-control" id="dsType">
+                        <option type="NATURAL">자연재해</option>
+                        <option type="ACCIDENT">사고</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dsArea">관할서</label>
+                    <input type="text" class="form-control" id="dsArea" placeholder="관할서를 입력하세요">
+                </div>
+                <div class="form-group">
+                    <label for="dsOwner">담당자</label>
+                    <select class="form-control" id="dsOwner">
+
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-xs-6 col-sm-5 col-md-5 col-lg-4">
+        <div id="map-canvas"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-2">
+        <table width="100%" id="supplyTab">
+            <tr>
+                <td width="150">구호품 종류</td>
+                <td width="220"><select type="text" class="form-control" style="width:200px;" name="supKind"></select></td>
+                <td width="100">필요수량</td>
+                <td width="60"><input type="text" class="form-control" style="width:50px;" name="supName"></td>
+                <td></td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-1">
+        <button type="button" class="btn btn-primary" id="addSup">구호품 추가</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-2">
+        <table width="100%" id="vtTab">
+            <tr>
+                <td width="150">봉사자 특기</td>
+                <td width="220"><select type="text" class="form-control" style="width:200px;" name="vtType"></select></td>
+                <td width="100">필요인원</td>
+                <td width="60"><input type="text" class="form-control" style="width:50px;" name="vtName"></td>
+                <td></td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-1">
+        <button type="button" class="btn btn-primary" id="addVt">봉사자 추가</button>
+    </div>
+</div>
+<div width="100%">
+    <table width="100%">
+        <tr>
+            <td align="center"><button type="button" class="btn btn-danger" id="submitBtn">재난 등록</button></td>
+        </tr>
+    </table>
+</div>
+
+    <script src="https://apis.google.com/js/client.js?onload=init"></script>
+    <script>
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+</body>
+</html>
