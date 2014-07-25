@@ -13,7 +13,7 @@ import static com.veckon.hack.neo2rewa.objectify.OfyService.ofy;
 @Api(name="neo2rewa",version="v1")
 public class UserApi {
 @ApiMethod(path="/user",httpMethod=HttpMethod.GET)
-	public List<User> findAll(@Named("id") String id){
+	public List<User> findAll(){
 		return ofy().load().type(User.class).list();
 	}
 	@ApiMethod(path="/user/{id}",httpMethod=HttpMethod.GET)

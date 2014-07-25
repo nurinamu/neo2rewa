@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
+import com.google.api.server.spi.config.DefaultValue;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.veckon.hack.neo2rewa.datastore.Supply;
@@ -13,8 +14,12 @@ import com.veckon.hack.neo2rewa.datastore.Supply;
 @Api(name="neo2rewa",version="v1")
 public class SupplyApi {
 	@ApiMethod(path="/supply",httpMethod=HttpMethod.GET)
-	public List<Supply> findAll(@Named("id") String id){
-		return ofy().load().type(Supply.class).list();
+	public List<Supply> findAll(@Named(value="type") @DefaultValue(value="") String type){
+		if("".equals(type)){
+			return ofy().load().type(Supply.class).list();
+		}else{
+			return ofy().load().type(Supply.class).filter("type", type).list();
+		}
 	}
 	@ApiMethod(path="/supply/{id}",httpMethod=HttpMethod.GET)
 	public Supply findOne(@Named("id") String id){

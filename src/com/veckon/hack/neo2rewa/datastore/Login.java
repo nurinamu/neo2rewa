@@ -1,5 +1,8 @@
 package com.veckon.hack.neo2rewa.datastore;
 
+import com.googlecode.objectify.annotation.Entity;
+
+@Entity
 public class Login {
 
 	boolean isLogined;

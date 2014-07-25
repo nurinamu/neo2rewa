@@ -13,7 +13,7 @@ import com.veckon.hack.neo2rewa.datastore.Disaster;
 @Api(name="neo2rewa",version="v1")
 public class DisasterApi {
 	@ApiMethod(path="/disaster",httpMethod=HttpMethod.GET)
-	public List<Disaster> findAll(@Named("id") String id){
+	public List<Disaster> findAll(){
 		return ofy().load().type(Disaster.class).list();
 	}
 	@ApiMethod(path="/disaster/{id}",httpMethod=HttpMethod.GET)
