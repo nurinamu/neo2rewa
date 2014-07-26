@@ -20,7 +20,7 @@ public class DisasterApi {
 	}
 	@ApiMethod(path="/disaster/{id}",httpMethod=HttpMethod.GET)
 	public Disaster findOne(@Named("id") String id){
-		return ofy().load().type(Disaster.class).filterKey(id).first().now();
+		return ofy().load().type(Disaster.class).filterKey(Key.create(Disaster.class, Long.parseLong(id))).first().now();
 	}
 	
 	@ApiMethod(path="/disaster",httpMethod=HttpMethod.POST)

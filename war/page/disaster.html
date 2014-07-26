@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>helpList</title>
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script>
+        function init(){
+            var ROOT = '/_ah/api';
+            gapi.client.load('neo2rewa', 'v1', function() {
+                initFunc();
+            }, ROOT);
+        }
+
+        function initFunc(){
+            var dsID;
+
+            var paramStr = location.href.split("?")[1];
+            if(paramStr){
+                var params = paramStr.split("&");
+                for(var i=0;i<params.length;i++){
+                    if(params[i].split("=")[0] == 'id'){
+                        dsID = params[i].split("=")[1];
+                        break;
+                    }
+                }
+
+                if(dsID){
+                    console.log(dsID);
+                    gapi.client.neo2rewa.disasterApi.findOne({id:dsID}).execute(function(resp){
+                        dsInfo = resp;
+                        $('#dsTitle').val(resp.title);
+                        $('#dsDesc').text(resp.description.value);
+
+                        google.maps.event.addDomListener(window, 'load', initialize);
+
+                        console.log(resp);
+
+
+
+                    });
+                }
+            }
+
+        }
+
+        var dsInfo;
+    </script>
+    <style>
+        #map-canvas{
+            height:500px;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">착한 중개인</a>
+        </div>
+        <div class="col-lg-8"></div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/page/login.html">로그인</a></li>
+                <li><a href="/page/register.html">회원가입</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top:20px;">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+        <table class="container"><tr>
+            <td id="dsTitle"></td>
+            <td >
+                <ul class="nav nav-pills-iv" role="tablist" id="myTab">
+                    <li class="active"><a href="#home" role="tab" data-toggle="tab">현황 안내</a></li>
+                    <li><a href="#supply" role="tab" data-toggle="tab">물품 지원</a></li>
+                    <li><a href="#volunteer" role="tab" data-toggle="tab">봉사 지원</a></li>
+                </ul>
+            </td></tr>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+        <div class="tab-content">
+            <div class="tab-pane active" id="home">
+                <table border="0" width="100%">
+                    <td colspan="2">
+                        <div id="map-canvas"></div>
+                    </td>
+                </table>
+            </div>
+
+            <div class="tab-pane" id="supply">
+                <div class="panel-group" id="supplyPanel">
+                    <!-- dynamic collapse part -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#supplyPanel" href="#supply_" name="supName"></a>
+                            </h4>
+                        </div>
+                        <div id="supply_" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <table>
+                                    <tr>
+                                        <td colspan="2" name="supDesc"></td>
+                                        <td rowspan="5">
+                                            <a class="btn btn-primary btn-lg" role="button">지원하</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>품목 :</td>
+                                        <td name="subName"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>현재수량(목표수량) :</td>
+                                        <td><span name="have"></span>(<span name="needs"></span>)</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- dynamic collapse part end-->
+                </div>
+            </div>
+            <div class="tab-pane" id="volunteer">
+                <div class="panel-group" id="volunteerPanel">
+                    <!-- dynamic collapse part -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#volunteerPanel" href="#collapseOne">
+                                    Collapsible Group Item #1
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var map;
+
+    function initialize() {
+        var mapOptions = {
+            zoom: 14
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+                mapOptions);
+
+        var pos = new google.maps.LatLng(dsInfo.geoX, dsInfo.geoY);
+
+        var infowindow = new google.maps.InfoWindow({
+            map: map,
+            position: pos,
+            content: "<span>구분:"+dsInfo.type+"<br>관할서:"+dsInfo.area+"<br>담당자:"+dsInfo.owner+"<br>개요:<br>"+dsInfo.description.value+"</span>"
+        });
+
+        map.setCenter(pos);
+
+        $('#map-canvas').css('height','600px');
+    }
+</script>
+<script src="https://apis.google.com/js/client.js?onload=init"></script>
+</body>
+</html>
