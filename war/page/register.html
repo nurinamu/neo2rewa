@@ -47,8 +47,37 @@
                             console.log(resp);
                             alert('사용자가 등록되었습니다.');
                             clear();
+                        	var refer= location.href.replace(location.protocal
+               					 + "//"
+               					 + location.host
+               					 + location.pathname,"").split("=")[1]
+               			 location.href = refer;
                         });
             });
+
+            $('#login').click(function(e){
+            	var refer= location.href.replace(location.protocal
+      					 + "//"
+      					 + location.host
+      					 + location.pathname,"").split("=")[1]
+				if(!refer){
+					refer = location.href;
+				}
+ //               var refer = location.href;
+                location.href = '/page/login.html?refer='+refer;
+            });
+
+            $('#join').click(function(e){
+            	var refer= location.href.replace(location.protocal
+     					 + "//"
+     					 + location.host
+     					 + location.pathname,"").split("=")[1]
+				if(!refer){
+					refer = location.href;
+				}
+                location.href = '/page/register.html?refer='+refer;
+            });
+            
         }
         function clear(){
             $('#userEmail').val('');
@@ -56,6 +85,7 @@
             $('#userPhone').val('');
             $('#userName').val('');
         }
+        
     </script>
 </head>
 <body>
@@ -73,8 +103,8 @@
         <div class="col-lg-8"></div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/page/login.html">로그인</a></li>
-                <li><a href="/page/register.html">회원가입</a></li>
+                <li><a href="javascript:void(0);" id="login">로그인</a></li>
+                <li><a href="javascript:void(0);" id="join">회원가입</a></li>
 
             </ul>
         </div>
