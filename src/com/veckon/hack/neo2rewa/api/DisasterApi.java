@@ -8,6 +8,7 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
+import com.googlecode.objectify.Key;
 import com.veckon.hack.neo2rewa.datastore.Disaster;
 import com.veckon.hack.neo2rewa.datastore.Result;
 
@@ -24,10 +25,9 @@ public class DisasterApi {
 	
 	@ApiMethod(path="/disaster",httpMethod=HttpMethod.POST)
 	public Result save(Disaster disaster){
-		ofy().save().entity(disaster).now();
-		Disaster getDisaster = ofy().load().entity(disaster).now();
-		if(getDisaster != null){
-			return new Result("success",getDisaster.getId());
+		Key<Disaster> result = ofy().save().entity(disaster).now();
+		if(result != null){
+			return new Result("success",result.getString());
 		}else{
 			return new Result("fail","confirm App Engine Server");
 		}

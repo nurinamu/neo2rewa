@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.appengine.api.datastore.Text;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.EmbedMap;
 import com.googlecode.objectify.annotation.Entity;
 
@@ -17,21 +16,20 @@ public class Disaster extends EntityData{
     String geoY;
     Text description;
     DisasterType type;
-    
-    //Key<User> owner;
+
+    String owner;
     String area;
     
     @EmbedMap
-    Map<Key<Supply>, Long> needSupplies;
+    Map<String, Long> needSupplies;
     
     @EmbedMap
-    Map<Key<Supply>, Long> haveSupplies;
+    Map<String, Long> haveSupplies;
     
     @EmbedMap
-    Map<Key<Supply>, Long> usedSupplies;
+    Map<String, Long> usedSupplies;
     
-   // List<Key<Job>> jobs;
-    
+    List<String> jobIDs;
     
     public enum DisasterType{
         NATURAL, ACCIDENT
@@ -77,38 +75,37 @@ public class Disaster extends EntityData{
         this.type = type;
     }
 
-    public Map<Key<Supply>, Long> getNeedSupplies() {
+    public Map<String, Long> getNeedSupplies() {
         return needSupplies;
     }
 
-    public void setNeedSupplies(Map<Key<Supply>, Long> needSupplies) {
+    public void setNeedSupplies(Map<String, Long> needSupplies) {
         this.needSupplies = needSupplies;
     }
 
-    public Map<Key<Supply>, Long> getHaveSupplies() {
+    public Map<String, Long> getHaveSupplies() {
         return haveSupplies;
     }
 
-    public void setHaveSupplies(Map<Key<Supply>, Long> haveSupplies) {
+    public void setHaveSupplies(Map<String, Long> haveSupplies) {
         this.haveSupplies = haveSupplies;
     }
 
-    public Map<Key<Supply>, Long> getUsedSupplies() {
+    public Map<String, Long> getUsedSupplies() {
         return usedSupplies;
     }
 
-    public void setUsedSupplies(Map<Key<Supply>, Long> usedSupplies) {
+    public void setUsedSupplies(Map<String, Long> usedSupplies) {
         this.usedSupplies = usedSupplies;
     }
 
+    public String getOwner() {
+        return owner;
+    }
 
-//    public Key<User> getOwner() {
-//        return owner;
-//    }
-//
-//    public void setOwner(Key<User> owner) {
-//        this.owner = owner;
-//    }
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 
     public String getArea() {
         return area;
@@ -118,12 +115,12 @@ public class Disaster extends EntityData{
         this.area = area;
     }
 
-//    public List<Key<Job>> getJobs() {
-//        return jobs;
-//    }
-//
-//    public void setJobs(List<Key<Job>> jobs) {
-//        this.jobs = jobs;
-//    }
+   public List<String> getJobs() {
+        return jobIDs;
+    }
+
+    public void setJobs(List<String> jobs) {
+        this.jobIDs = jobs;
+    }
 
 }

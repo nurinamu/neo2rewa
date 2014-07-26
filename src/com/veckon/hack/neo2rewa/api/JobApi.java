@@ -6,11 +6,12 @@ import java.util.List;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
+import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.DefaultValue;
 import com.google.api.server.spi.config.Named;
-import com.google.api.server.spi.config.ApiMethod.HttpMethod;
-import com.veckon.hack.neo2rewa.datastore.Result;
+import com.googlecode.objectify.Key;
 import com.veckon.hack.neo2rewa.datastore.Job;
+import com.veckon.hack.neo2rewa.datastore.Result;
 
 @Api(name="neo2rewa",version="v1")
 public class JobApi {
@@ -29,10 +30,9 @@ public class JobApi {
 	
 	@ApiMethod(path="/job",httpMethod=HttpMethod.POST)
 	public Result save(Job job){
-		ofy().save().entity(job).now();
-		Job getJob = ofy().load().entity(job).now();
-		if(getJob != null){
-			return new Result("success",job.getId().toString());
+		Key<Job> result = ofy().save().entity(job).now();
+		if(result != null){
+			return new Result("success",result.getString());
 		}else{
 			return new Result("fail","confirm App Engine Server");
 		}
