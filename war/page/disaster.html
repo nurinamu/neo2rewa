@@ -34,9 +34,10 @@
                 if(dsID){
                     console.log(dsID);
                     gapi.client.neo2rewa.disasterApi.findOne({id:dsID}).execute(function(resp){
+                        console.log(resp);
                         dsInfo = resp;
-                        $('#dsTitle').val(resp.title);
-                        $('#dsDesc').text(resp.description.value);
+                        $('#dsTitle').val(decodeURIComponent(resp.title));
+                        $('#dsDesc').text(decodeURIComponent(resp.description.value));
 
                         google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -47,6 +48,12 @@
                                     have = getInt(resp.haveSupplies[supID]);
                                 }
                                 addSupply(supID, have, getInt(resp.needSupplies[supID]));
+                            }
+                        }
+
+                        for(var jobID in resp.jobIDs){
+                            if(jobID != null && jobID && jobID != 'null'){
+                                addVolunteer(resp.jobIDs[jobID]);
                             }
                         }
 
@@ -88,23 +95,49 @@
                     "<td>현재수량(목표수량) :</td>"+
                     "<td><span name=\"have\"></span>(<span name=\"needs\"></span>)</td>"+
                     "</tr>"+
+                    "</tr><tr><div class=\"progress\">"+
+                    "<div name=\"pb\" class=\"progress-bar progress-bar-success progress-bar-striped\" role=\"progressbar\" aria-valuenow=\"0\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 0%\">"+
+                    "<span class=\"sr-only\">40% Complete (success)</span>"+
+                    "</div>"+
+                    "</div></tr>"+
                     "</table>"+
                     "</div>"+
                     "</div>"+
                     "</div>";
             var row = $(supHTML).appendTo($('#supplyPanel'));
+            var pb = $('div[name=pb]', row);
+            var button = $('a[name=supBtn]', row);
 
             gapi.client.neo2rewa.supplyApi.findOne({id:supplyID_}).execute(function(resp){
                console.log(resp);
                 $('a[name=supName]', row).text(decodeURIComponent(resp.name));
                 $('td[name=supName]', row).text(decodeURIComponent(resp.name));
                 $('td[name=supDesc]', row).text(decodeURIComponent(resp.description.value));
-                $('span[name=have]',row).text(have_);
+                var haveSpan = $('span[name=have]',row).text(have_);
                 $('span[name=needs]',row).text(needs_);
+
+                var percentage = parseInt(have_)*100/parseInt(needs_);
+                pb.attr('aria-valuenow',percentage).css('width',percentage+'%');
+
+                var have = parseInt(have_);
+
+                button.click(function(){
+                    have+=10;
+                    if(have > needs_){
+                        have = needs_;
+                        button.attr('disabled', 'disabled');
+                        pb.removeClass("progress-bar-success progress-bar-striped");
+                    }
+
+                    haveSpan.text(have);
+                    var percentage = parseInt(have)*100/parseInt(needs_);
+                    pb.attr('aria-valuenow',percentage).css('width',percentage+'%');
+                });
+
             });
         }
 
-        function addVolunteer(volID_, have_, needs_){
+        function addVolunteer(volID_){
             var supHTML = "<div class=\"panel panel-default\">"+
                     "<div class=\"panel-heading\">"+
                     "<h4 class=\"panel-title\">"+
@@ -127,21 +160,51 @@
                     "<tr>"+
                     "<td>현재인원(목표인원) :</td>"+
                     "<td><span name=\"have\"></span>(<span name=\"needs\"></span>)</td>"+
-                    "</tr>"+
+                    "</tr><tr><div class=\"progress\">"+
+                    "<div name=\"pb\" class=\"progress-bar progress-bar-success progress-bar-striped\" role=\"progressbar\" aria-valuenow=\"0\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 0%\">"+
+                    "<span class=\"sr-only\">40% Complete (success)</span>"+
+                    "</div>"+
+                    "</div></tr>"+
                     "</table>"+
                     "</div>"+
                     "</div>"+
                     "</div>";
             var row = $(supHTML).appendTo($('#volunteerPanel'));
+            var pb = $('div[name=pb]', row);
+            var button = $('a[name=supBtn]', row);
 
-            gapi.client.neo2rewa.supplyApi.findOne({id:supplyID_}).execute(function(resp){
+            gapi.client.neo2rewa.jobApi.findOne({id:volID_}).execute(function(resp){
                 console.log(resp);
                 $('a[name=volType]', row).text(decodeURIComponent(resp.type));
                 $('td[name=volType]', row).text(decodeURIComponent(resp.type));
-                $('td[name=volDesc]', row).text(decodeURIComponent(resp.description.value));
-                $('span[name=have]',row).text(have_);
-                $('span[name=needs]',row).text(needs_);
+                $('td[name=volDesc]', row).text(decodeURIComponent(resp.desc.value));
+                var haveSpan = $('span[name=have]',row).text(resp.have);
+                $('span[name=needs]',row).text(resp.needs);
+
+                var percentage = parseInt(resp.have)*100/parseInt(resp.needs);
+                pb.attr('aria-valuenow',percentage).css('width',percentage+'%');
+
+                var have = parseInt(resp.have);
+
+                button.click(function(){
+                   have+=10;
+                    if(have > resp.needs){
+                        have = resp.needs;
+                        button.attr('disabled', 'disabled');
+                        pb.removeClass("progress-bar-success progress-bar-striped");
+                    }
+                   gapi.client.neo2rewa.jobApi.save({
+                       id:resp.id,
+                       have:have
+                   }).execute(function(resp_){
+                       haveSpan.text(have);
+                       var percentage = parseInt(have)*100/parseInt(resp.needs);
+                       pb.attr('aria-valuenow',percentage).css('width',percentage+'%');
+                           });
+                });
             });
+
+
         }
 
         var dsInfo;
@@ -235,15 +298,28 @@
 
         var pos = new google.maps.LatLng(dsInfo.geoX, dsInfo.geoY);
 
+        var owner ="";
+        if(dsInfo.owner){
+            owner = dsInfo.owner;
+        }
+
         var infowindow = new google.maps.InfoWindow({
             map: map,
             position: pos,
-            content: "<span>구분:"+dsInfo.type+"<br>관할서:"+dsInfo.area+"<br>담당자:"+dsInfo.owner+"<br>개요:<br>"+dsInfo.description.value+"</span>"
+            content: "<span>구분:"+typeStr(dsInfo.type)+"<br>관할서:"+decodeURIComponent(dsInfo.area)+"<br>담당자:"+owner+"<br>개요:<br>"+decodeURIComponent(dsInfo.description.value)+"</span>"
         });
 
         map.setCenter(pos);
 
         $('#map-canvas').css('height','600px');
+    }
+
+    function typeStr(type_){
+        if(type_=='NATURAL'){
+            return "자연재해";
+        }else{
+            return "사고";
+        }
     }
 </script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
