@@ -6,9 +6,10 @@ import java.util.List;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
+import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.DefaultValue;
 import com.google.api.server.spi.config.Named;
-import com.google.api.server.spi.config.ApiMethod.HttpMethod;
+import com.googlecode.objectify.Key;
 import com.veckon.hack.neo2rewa.datastore.Result;
 import com.veckon.hack.neo2rewa.datastore.Supply;
 
@@ -24,7 +25,7 @@ public class SupplyApi {
 	}
 	@ApiMethod(path="/supply/{id}",httpMethod=HttpMethod.GET)
 	public Supply findOne(@Named("id") String id){
-		return ofy().load().type(Supply.class).filterKey(Long.parseLong(id)).first().now();
+	    return ofy().load().type(Supply.class).filterKey(Key.create(Supply.class, Long.parseLong(id))).first().now();
 	}
 	
 	@ApiMethod(path="/supply",httpMethod=HttpMethod.POST)

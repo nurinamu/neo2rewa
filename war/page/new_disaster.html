@@ -44,6 +44,7 @@
                 geoY:disasterLocation.lng().toFixed(6),
                 issueDate:new Date().getTime()
             }).execute(function(resp){
+                        console.log(resp);
                 alert("재난 구호 정보가 입력되었습니다.");
             });
         }
