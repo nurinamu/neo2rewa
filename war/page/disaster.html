@@ -40,14 +40,108 @@
 
                         google.maps.event.addDomListener(window, 'load', initialize);
 
-                        console.log(resp);
-
+                        for(var supID in resp.needSupplies){
+                            if(supID != null && supID && supID != 'null'){
+                                var have = 0;
+                                if(resp.haveSupplies){
+                                    have = getInt(resp.haveSupplies[supID]);
+                                }
+                                addSupply(supID, have, getInt(resp.needSupplies[supID]));
+                            }
+                        }
 
 
                     });
                 }
             }
 
+        }
+
+        function getInt(val_){
+            if(val_){
+                return val_;
+            }
+            return 0;
+        }
+
+        function addSupply(supplyID_, have_, needs_){
+            var supHTML = "<div class=\"panel panel-default\">"+
+                        "<div class=\"panel-heading\">"+
+                    "<h4 class=\"panel-title\">"+
+                    "<a data-toggle=\"collapse\" data-parent=\"#supplyPanel\" href=\"#supply_\" name=\"supName\"></a>"+
+                    "</h4>"+
+                    "</div>"+
+                    "<div id=\"supply_\" class=\"panel-collapse collapse in\">"+
+                    "<div class=\"panel-body\">"+
+                    "<table width=\"100%\">"+
+                    "<tr>"+
+                    "<td colspan=\"2\" name=\"supDesc\"></td>"+
+                    "<td rowspan=\"5\">"+
+                    "<a class=\"btn btn-primary btn-lg\" role=\"button\" name=\"supBtn\">지원하기</a>"+
+                    "</td>"+
+                    "</tr>"+
+                    "<tr>"+
+                    "<td>품목 :</td>"+
+                    "<td name=\"supName\"></td>"+
+                    "</tr>"+
+                    "<tr>"+
+                    "<td>현재수량(목표수량) :</td>"+
+                    "<td><span name=\"have\"></span>(<span name=\"needs\"></span>)</td>"+
+                    "</tr>"+
+                    "</table>"+
+                    "</div>"+
+                    "</div>"+
+                    "</div>";
+            var row = $(supHTML).appendTo($('#supplyPanel'));
+
+            gapi.client.neo2rewa.supplyApi.findOne({id:supplyID_}).execute(function(resp){
+               console.log(resp);
+                $('a[name=supName]', row).text(decodeURIComponent(resp.name));
+                $('td[name=supName]', row).text(decodeURIComponent(resp.name));
+                $('td[name=supDesc]', row).text(decodeURIComponent(resp.description.value));
+                $('span[name=have]',row).text(have_);
+                $('span[name=needs]',row).text(needs_);
+            });
+        }
+
+        function addVolunteer(volID_, have_, needs_){
+            var supHTML = "<div class=\"panel panel-default\">"+
+                    "<div class=\"panel-heading\">"+
+                    "<h4 class=\"panel-title\">"+
+                    "<a data-toggle=\"collapse\" data-parent=\"#supplyPanel\" href=\"#supply_\" name=\"volType\"></a>"+
+                    "</h4>"+
+                    "</div>"+
+                    "<div id=\"supply_\" class=\"panel-collapse collapse in\">"+
+                    "<div class=\"panel-body\">"+
+                    "<table width=\"100%\">"+
+                    "<tr>"+
+                    "<td colspan=\"2\" name=\"volDesc\"></td>"+
+                    "<td rowspan=\"5\">"+
+                    "<a class=\"btn btn-primary btn-lg\" role=\"button\" name=\"supBtn\">지원하기</a>"+
+                    "</td>"+
+                    "</tr>"+
+                    "<tr>"+
+                    "<td>특기 :</td>"+
+                    "<td name=\"volType\"></td>"+
+                    "</tr>"+
+                    "<tr>"+
+                    "<td>현재인원(목표인원) :</td>"+
+                    "<td><span name=\"have\"></span>(<span name=\"needs\"></span>)</td>"+
+                    "</tr>"+
+                    "</table>"+
+                    "</div>"+
+                    "</div>"+
+                    "</div>";
+            var row = $(supHTML).appendTo($('#volunteerPanel'));
+
+            gapi.client.neo2rewa.supplyApi.findOne({id:supplyID_}).execute(function(resp){
+                console.log(resp);
+                $('a[name=volType]', row).text(decodeURIComponent(resp.type));
+                $('td[name=volType]', row).text(decodeURIComponent(resp.type));
+                $('td[name=volDesc]', row).text(decodeURIComponent(resp.description.value));
+                $('span[name=have]',row).text(have_);
+                $('span[name=needs]',row).text(needs_);
+            });
         }
 
         var dsInfo;
@@ -85,15 +179,17 @@
 
 <div class="row" style="margin-top:20px;">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-        <table class="container"><tr>
-            <td id="dsTitle"></td>
-            <td >
-                <ul class="nav nav-pills-iv" role="tablist" id="myTab">
-                    <li class="active"><a href="#home" role="tab" data-toggle="tab">현황 안내</a></li>
-                    <li><a href="#supply" role="tab" data-toggle="tab">물품 지원</a></li>
-                    <li><a href="#volunteer" role="tab" data-toggle="tab">봉사 지원</a></li>
-                </ul>
-            </td></tr>
+        <table class="container">
+            <tr>
+                <td id="dsTitle"></td>
+                <td >
+                    <ul class="nav nav-tabs" role="tablist" id="myTab">
+                        <li class="active"><a href="#home" role="tab" data-toggle="tab">현황 안내</a></li>
+                        <li><a href="#supply" role="tab" data-toggle="tab">물품 지원</a></li>
+                        <li><a href="#volunteer" role="tab" data-toggle="tab">봉사 지원</a></li>
+                    </ul>
+                </td>
+            </tr>
         </table>
     </div>
 </div>
@@ -112,53 +208,13 @@
             <div class="tab-pane" id="supply">
                 <div class="panel-group" id="supplyPanel">
                     <!-- dynamic collapse part -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#supplyPanel" href="#supply_" name="supName"></a>
-                            </h4>
-                        </div>
-                        <div id="supply_" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <table>
-                                    <tr>
-                                        <td colspan="2" name="supDesc"></td>
-                                        <td rowspan="5">
-                                            <a class="btn btn-primary btn-lg" role="button">지원하</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>품목 :</td>
-                                        <td name="subName"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>현재수량(목표수량) :</td>
-                                        <td><span name="have"></span>(<span name="needs"></span>)</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+
                     <!-- dynamic collapse part end-->
                 </div>
             </div>
             <div class="tab-pane" id="volunteer">
                 <div class="panel-group" id="volunteerPanel">
                     <!-- dynamic collapse part -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#volunteerPanel" href="#collapseOne">
-                                    Collapsible Group Item #1
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
             </div>

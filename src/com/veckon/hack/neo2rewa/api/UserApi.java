@@ -1,5 +1,7 @@
 package com.veckon.hack.neo2rewa.api;
 
+import static com.veckon.hack.neo2rewa.objectify.OfyService.ofy;
+
 import java.util.List;
 
 import com.google.api.server.spi.config.Api;
@@ -7,10 +9,9 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.DefaultValue;
 import com.google.api.server.spi.config.Named;
+import com.googlecode.objectify.Key;
 import com.veckon.hack.neo2rewa.datastore.Result;
 import com.veckon.hack.neo2rewa.datastore.User;
-
-import static com.veckon.hack.neo2rewa.objectify.OfyService.ofy;
 
 @Api(name="neo2rewa",version="v1")
 public class UserApi {
@@ -29,10 +30,10 @@ public class UserApi {
 	
 	@ApiMethod(path="/user",httpMethod=HttpMethod.POST)
 	public Result save(User user){
-		ofy().save().entity(user).now();
-		User getUser = ofy().load().entity(user).now();
-		if(getUser != null){
-			return new Result("success",getUser.getName());
+		Key<User> result = ofy().save().entity(user).now();
+		
+		if(result != null){
+			return new Result("success",result.getString());
 		}else{
 			return new Result("fail","confirm App Engine Server");
 		}
