@@ -222,7 +222,7 @@ margin-left: 20%;">
 				innerList ="",
 				indicatorsList = "";
 				$('.carousel-inner').children().detach();
-
+				var rand = Math.random();
 				for(var i = 0; i<5 ;i++){
 					var activeNum = i == 0 ? 'active' : '';
 					innerList +='<div class="item '+activeNum +'">'
@@ -234,17 +234,17 @@ margin-left: 20%;">
 			              +' <div class="col-lg-3">'
 			                +'<a href="#">'
 			                  +'<img class="img-circle" src="/img/people.png" style="width: 80px; height: 80px;"></a>'
-			                  +'<h3>350/500</h3>'
+			                  +'<h3>'+Math.ceil((Math.random()*500 +1))+'/500</h3>'
 			                  +'</div>'
 			                +' <div class="col-lg-3">'
 			                +'<a href="#">'
 			                  +'<img class="img-circle" src="/img/water.png" style="width: 80px; height: 80px;"></a>'
-			                  +'<h3>503/1000</h3>'
+			                  +'<h3>'+Math.ceil((Math.random()*1000 +1))+'/1000</h3>'
 			                  +'</div>'
 			                +' <div class="col-lg-3">'
 			                +' <a href="#">'
 			                  +' <img class="img-circle" src="/img/blanket.png" style="width: 80px; height: 80px;"></a>'
-			                  +' <h3>40/500</h3>'
+			                  +' <h3>'+Math.ceil((Math.random()*500 +1))+'/500</h3>'
 			                  +'</div>'
 			                +'<div class="col-lg-3">'
 			                +'<a href="#">'
@@ -257,7 +257,7 @@ margin-left: 20%;">
 			          +'</div>'
 			        +'</div>';
 				}
-				console.log(innerList);
+		//		console.log(innerList);
 				$('.carousel-inner').html(innerList);
 
 				$('.carousel-indicators').children().detach();
