@@ -28,19 +28,19 @@
 
             initAdminList();
 
-            $('#submitBtn').click(addDisaster);
+            $('#submitBtn').click(getVolunteers);
         }
 
-        function addDisaster(){
+        function addDisaster(vols_){
             gapi.client.neo2rewa.disasterApi.save({
                 description:encodeURIComponent($('#dsDesc').val()),
                 type:$('#dsTYpe').val(),
                 owner:$('#dsOwner').val(),
                 area:$('#dsArea').val(),
                 needSupplies:getSupplies(),
-                needVolunteers:getVolunteers(),
-                geoX:disasterLocation.lat.toFixed(6),
-                geoY:disasterLocation.lng.toFixed(6)
+                needVolunteers:vols_,
+                geoX:disasterLocation.lat().toFixed(6),
+                geoY:disasterLocation.lng().toFixed(6)
             }).execute(function(resp){
                 alert("재난 구호 정보가 입력되었습니다.");
             });
@@ -50,18 +50,31 @@
             var totalCnt = $('select[name=supType]').length;
             var supplies = {}
             for(var i=0;i<totalCnt;i++){
-                supplies[$('select[name=supName]')[i].val()] = $('input[name=supCnt]')[i].val();
+                supplies[$($('select[name=supName]')[i]).val()] = $($('input[name=supCnt]')[i]).val();
             }
+            console.log(supplies);
             return supplies;
         }
 
         function getVolunteers(){
-            var totalCnt = 0;
+            var jobList = [];
             for(var i=0;i<vtCnt;i++){
-               //gapi.client.neo2rewa.jobApi.save()
+               gapi.client.neo2rewa.jobApi.save({
+                   desc:encodeURIComponent($($('textarea[name=vtDesc]')[i]).val()),
+                   type:$($('select[name=vtType]')[i]).val(),
+                   needs:$($('input[name=vtCnt]')[i]).val(),
+                   have:0,
+                   quit:0
+               }).execute(function(resp){
+                    console.log(resp);
+                   //jobList[i] = resp.result.message;
+                   jobList.push(resp.result.message);
+                   if(jobList.length == vtCnt){
+                        addDisaster(jobList);
+                   }
+                });
             }
 
-            return supplies;
         }
 
         var supplyCnt = 0;
@@ -117,12 +130,12 @@
                     "<option value=\"ETC\">기타</option>" +
                     "</select></td>"
                     +"<td width=\"100\">필요인원</td>"
-                    +"<td width=\"60\"><input type=\"text\" class=\"form-control\" style=\"width:50px;\" name=\"vtName\"></td>"
+                    +"<td width=\"60\"><input type=\"text\" class=\"form-control\" style=\"width:50px;\" name=\"vtCnt\"></td>"
                     +"<td></td>"
                     +"</tr>"
                     +"<tr height=\"90\">"
                     +"<td width=\"150\">요구 사항</td>"
-            +"<td colspan=\"3\"><textarea class=\"form-control\" rows=\"3\" hname=\"vtDesc\"></textarea></td>"
+            +"<td colspan=\"3\"><textarea class=\"form-control\" rows=\"3\" name=\"vtDesc\"></textarea></td>"
                     +"<td></td>"
             +"</tr>";
             $(vtRowHTML).appendTo($('#vtTab'));
