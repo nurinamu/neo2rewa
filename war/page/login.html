@@ -91,7 +91,7 @@ body {
           </label>
         </div>
        	<button type="button" style="float: right" class="btn btn-lg return">Close</button>
-        <button type="button" style="float: right" class="btn btn-primary btn-lg" type="submit">Sign in</button>
+        <button type="submit" style="float: right" class="btn btn-primary btn-lg" type="submit">Sign in</button>
        </form>
 
     </div> <!-- /container -->
@@ -115,7 +115,7 @@ function initFunc(){
 $('form').submit(function(e){
 	e.preventDefault();
 	var email = $('.form-signin input.form-control')[0].value,
-	password = $('#loginModal .modal-body .email').value;
+	password = $('.form-signin input.form-control')[1].value;
 	console.log("email : " + email + ", password : " + password);
 	gapi.client.neo2rewa.loginApi.login({
 		'email' : email,
@@ -130,6 +130,10 @@ $('form').submit(function(e){
 					 + location.host
 					 + location.pathname,"").split("=")[1]
 			 console.log(refer);
+			 if(!refer){
+					refer = "/"
+			 }
+			location.href = refer;	 
 			alert(resp.error);
 		}
 	});
@@ -139,7 +143,9 @@ $('.return').click(function(e){
 			 + "//"
 			 + location.host
 			 + location.pathname,"").split("=")[1]
-
+	 if(!refer){
+			refer = "/"
+	 }
 	location.href = refer;
 })
 };
