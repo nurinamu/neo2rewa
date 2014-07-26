@@ -210,7 +210,7 @@ margin-left: 20%;">
     function initFunc(){
     	gapi.client.neo2rewa.disasterApi.findAll(
     	).execute(function(resp){
-        	
+        	console.log(resp.items);
         	setDisaster(resp.items);
         });	
 
