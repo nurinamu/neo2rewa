@@ -54,96 +54,7 @@
         <li data-target="#myCarousel" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner">
-        <div class="item active">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
-          <div class="container">
-            <div class="carousel-caption">
-              <div style="padding:20px;"><p style="font-size:60px">서울시 수해 복구 지원</p></div>
-              <div class="row" style="padding-bottom:80px">
-                <div class="col-lg-3">
-                  <a href="#">
-                  <img class="img-circle" src="/img/people.png" style="width: 80px; height: 80px;"></a>
-                  <h3>102/303</h3>
-                </div>
-                <div class="col-lg-3">
-                  <a href="#">
-                  <img class="img-circle" src="/img/water.png" style="width: 80px; height: 80px;"></a>
-                  <h3>1200/5000</h3>
-                </div>
-                <div class="col-lg-3">
-                  <a href="#">
-                  <img class="img-circle" src="/img/cloth.png" style="width: 80px; height: 80px;"></a>
-                  <h3>40/500</h3>
-                </div>
-                <div class="col-lg-3">
-                  <a href="#">
-                  <img class="img-circle" src="/img/medicine.png" style="width: 80px; height: 80px;"></a>
-                  <h3>완료</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAGZmZgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
-          <div class="container">
-            <div class="carousel-caption">
-              <div style="padding:20px;"><p style="font-size:60px">고담시 건물 붕괴 사고 지원</p></div>
-              <div class="row" style="padding-bottom:80px">
-                <div class="col-lg-3">
-                  <a href="#">
-                  <img class="img-circle" src="/img/people.png" style="width: 80px; height: 80px;"></a>
-                  <h3>350/500</h3>
-                </div>
-                <div class="col-lg-3">
-                  <a href="#">
-                  <img class="img-circle" src="/img/water.png" style="width: 80px; height: 80px;"></a>
-                  <h3>503/1000</h3>
-                </div>
-                <div class="col-lg-3">
-                  <a href="#">
-                  <img class="img-circle" src="/img/blanket.png" style="width: 80px; height: 80px;"></a>
-                  <h3>40/500</h3>
-                </div>
-                <div class="col-lg-3">
-                  <a href="#">
-                  <img class="img-circle" src="/img/rice.png" style="width: 80px; height: 80px;"></a>
-                  <h3>완료</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAFVVVQAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
-          <div class="container">
-            <div class="carousel-caption">
-              <div style="padding:20px;"><p style="font-size:60px">대구시 폭염 재해 지원</p></div>
-              <div class="row" style="padding-bottom:80px">
-                <div class="col-lg-3">
-                  <a href="#">
-                  <img class="img-circle" src="/img/people.png" style="width: 80px; height: 80px;"></a>
-                  <h3>200/300</h3>
-                </div>
-                <div class="col-lg-3">
-                  <a href="#">
-                  <img class="img-circle" src="/img/rice.png" style="width: 80px; height: 80px;"></a>
-                  <h3>900/1000</h3>
-                </div>
-                <div class="col-lg-3">
-                  <a href="#">
-                  <img class="img-circle" src="/img/cloth.png" style="width: 80px; height: 80px;"></a>
-                  <h3>완료</h3>
-                </div>
-                <div class="col-lg-3">
-                  <a href="#">
-                  <img class="img-circle" src="/img/medicine.png" style="width: 80px; height: 80px;"></a>
-                  <h3>완료</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      
       </div>
       <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
       <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -210,12 +121,12 @@ margin-left: 20%;">
     function initFunc(){
     	gapi.client.neo2rewa.disasterApi.findAll(
     	).execute(function(resp){
-        	console.log(resp.items);
+        	console.log(resp);
         	setDisaster(resp.items);
         });	
 
         function setDisaster(items){
-            items = [];
+            //items = [];
 			if(items){
 				var length = items.length,
 				liList = "",
@@ -223,28 +134,28 @@ margin-left: 20%;">
 				indicatorsList = "";
 				$('.carousel-inner').children().detach();
 				var rand = Math.random();
-				for(var i = 0; i<5 ;i++){
+				for(var i = 0; i<length ;i++){
 					var activeNum = i == 0 ? 'active' : '';
 					innerList +='<div class="item '+activeNum +'">'
 						+' <img src="data:image/gif;base64,R0lGODlhAQABAIAAAGZmZgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">'
 				          +' <div class="container">'
 			          +'<div class="carousel-caption">'
-			            +'<div style="padding:20px;"><p style="font-size:60px">고담시 건물 붕괴 사고 지원</p></div>'
+			            +'<div style="padding:20px;"><a href="/page/disaster.html?id='+items[i]['id']+'"><p style="font-size:60px">['+items[i]["area"]+'] '+items[i]["title"]+'</p></a></div>'
 			              +'<div class="row" style="padding-bottom:80px">'
 			              +' <div class="col-lg-3">'
 			                +'<a href="#">'
 			                  +'<img class="img-circle" src="/img/people.png" style="width: 80px; height: 80px;"></a>'
-			                  +'<h3>'+Math.ceil((Math.random()*500 +1))+'/500</h3>'
+			                  +'<h3>'+0+'/'+items[i]['needSupplies']['null']+'</h3>'
 			                  +'</div>'
 			                +' <div class="col-lg-3">'
 			                +'<a href="#">'
 			                  +'<img class="img-circle" src="/img/water.png" style="width: 80px; height: 80px;"></a>'
-			                  +'<h3>'+Math.ceil((Math.random()*1000 +1))+'/1000</h3>'
+			                  +'<h3></h3>'
 			                  +'</div>'
 			                +' <div class="col-lg-3">'
 			                +' <a href="#">'
 			                  +' <img class="img-circle" src="/img/blanket.png" style="width: 80px; height: 80px;"></a>'
-			                  +' <h3>'+Math.ceil((Math.random()*500 +1))+'/500</h3>'
+			                  +' <h3></h3>'
 			                  +'</div>'
 			                +'<div class="col-lg-3">'
 			                +'<a href="#">'
@@ -261,16 +172,16 @@ margin-left: 20%;">
 				$('.carousel-inner').html(innerList);
 
 				$('.carousel-indicators').children().detach();
-				for(var i=0;i<5;i++){
+				for(var i=0;i<length;i++){
 					var check = i ==0 ? 'active' : "";
 					indicatorsList += '<li data-target="#myCarousel" data-slide-to="0" class="'+check+'"></li>';
 				}
 				$('.carousel-indicators').html(indicatorsList)
 				$('.list-group').empty();
 
-				for(var i=0;i<5;i++){
+				for(var i=0;i<length;i++){
 					liList += '<li class="list-group-item">'
-			           	+'<h5>2014. 02. 14. 광롱시 폭설 복구 지원'+i+'<span class="label label-warning" style="float:right;">진행중</span></h5>'
+			           	+'<h5>'+new Date(parseInt(items[i]['issueDate'])).toLocaleString() + ' '+items[i]['area'] +' ' + items[i]['title']+'<span class="label label-warning" style="float:right;">진행중</span></h5>'
 			            +'</li>';
 				}
 				$('.list-group').html(liList);	
