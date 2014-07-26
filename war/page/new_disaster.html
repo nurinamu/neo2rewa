@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>재난 등록 페이지입니다.</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 
@@ -113,6 +113,7 @@
             var supCnt = $('input[name=supCnt]', row);
 
             supType.change(function(){
+                supName.find('option').remove().end();
                 gapi.client.neo2rewa.supplyApi.findAll({type:$(this).val()}).execute(function(resp){
                     for(var i=0;i<resp.result.items.length;i++){
                         $('<option value=\"'+resp.result.items[i].id+'\">'+decodeURIComponent(resp.result.items[i].name)+'</option>').appendTo(supName);
@@ -167,6 +168,8 @@
                         content: '재난 위치를 클릭 해주십시요.'
                     });
 
+                    disasterLocation = pos;
+
                     map.setCenter(pos);
                 }, function() {
                     handleNoGeolocation(true);
@@ -203,6 +206,7 @@
 
             var infowindow = new google.maps.InfoWindow(options);
             map.setCenter(options.position);
+            disasterLocation = options.position;
         }
 
     </script>
