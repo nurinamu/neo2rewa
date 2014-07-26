@@ -3702,21 +3702,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #fff;
   background-color: #428bca;
 }
-.nav-pills-iv > li {
-  float: left;
-}
-.nav-pills-iv > li > a {
-  border-radius: 4px;
-}
-.nav-pills-iv > li + li {
-  margin-left: 2px;
-}
-.nav-pills-iv > li.active > a,
-.nav-pills-iv > li.active > a:hover,
-.nav-pills-iv > li.active > a:focus {
-  color: #fff;
-  background-color: #666;
-}
 .nav-stacked > li {
   float: none;
 }
