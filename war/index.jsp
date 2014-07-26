@@ -58,9 +58,29 @@
           <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
-              <h1>서울시 수해 복구 지원</h1>
-              <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">지원하기</a></p>
+              <div style="padding:20px;"><p style="font-size:60px">서울시 수해 복구 지원</p></div>
+              <div class="row" style="padding-bottom:80px">
+                <div class="col-lg-3">
+                  <a href="#">
+                  <img class="img-circle" src="/img/people.png" style="width: 80px; height: 80px;"></a>
+                  <h3>102/303</h3>
+                </div>
+                <div class="col-lg-3">
+                  <a href="#">
+                  <img class="img-circle" src="/img/water.png" style="width: 80px; height: 80px;"></a>
+                  <h3>1200/5000</h3>
+                </div>
+                <div class="col-lg-3">
+                  <a href="#">
+                  <img class="img-circle" src="/img/cloth.png" style="width: 80px; height: 80px;"></a>
+                  <h3>40/500</h3>
+                </div>
+                <div class="col-lg-3">
+                  <a href="#">
+                  <img class="img-circle" src="/img/medicine.png" style="width: 80px; height: 80px;"></a>
+                  <h3>완료</h3>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -68,9 +88,29 @@
           <img src="data:image/gif;base64,R0lGODlhAQABAIAAAGZmZgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
           <div class="container">
             <div class="carousel-caption">
-              <h1>고담시 건물 붕괴 복구 지원</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">지원하기</a></p>
+              <div style="padding:20px;"><p style="font-size:60px">고담시 건물 붕괴 사고 지원</p></div>
+              <div class="row" style="padding-bottom:80px">
+                <div class="col-lg-3">
+                  <a href="#">
+                  <img class="img-circle" src="/img/people.png" style="width: 80px; height: 80px;"></a>
+                  <h3>350/500</h3>
+                </div>
+                <div class="col-lg-3">
+                  <a href="#">
+                  <img class="img-circle" src="/img/water.png" style="width: 80px; height: 80px;"></a>
+                  <h3>503/1000</h3>
+                </div>
+                <div class="col-lg-3">
+                  <a href="#">
+                  <img class="img-circle" src="/img/blanket.png" style="width: 80px; height: 80px;"></a>
+                  <h3>40/500</h3>
+                </div>
+                <div class="col-lg-3">
+                  <a href="#">
+                  <img class="img-circle" src="/img/rice.png" style="width: 80px; height: 80px;"></a>
+                  <h3>완료</h3>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -78,9 +118,29 @@
           <img src="data:image/gif;base64,R0lGODlhAQABAIAAAFVVVQAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
           <div class="container">
             <div class="carousel-caption">
-              <h1>서울시 ...</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">지원하기</a></p>
+              <div style="padding:20px;"><p style="font-size:60px">대구시 폭염 재해 지원</p></div>
+              <div class="row" style="padding-bottom:80px">
+                <div class="col-lg-3">
+                  <a href="#">
+                  <img class="img-circle" src="/img/people.png" style="width: 80px; height: 80px;"></a>
+                  <h3>200/300</h3>
+                </div>
+                <div class="col-lg-3">
+                  <a href="#">
+                  <img class="img-circle" src="/img/rice.png" style="width: 80px; height: 80px;"></a>
+                  <h3>900/1000</h3>
+                </div>
+                <div class="col-lg-3">
+                  <a href="#">
+                  <img class="img-circle" src="/img/cloth.png" style="width: 80px; height: 80px;"></a>
+                  <h3>완료</h3>
+                </div>
+                <div class="col-lg-3">
+                  <a href="#">
+                  <img class="img-circle" src="/img/medicine.png" style="width: 80px; height: 80px;"></a>
+                  <h3>완료</h3>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -97,7 +157,7 @@
             <h5>2014. 02. 14. 광롱시 폭설 복구 지원  <span class="label label-warning" style="float:right;">진행중</span></h5>
           </li>
           <li class="list-group-item">
-            <h5>2014. 02. 14. 광롱시 폭설 복구 지원  <span class="label label-default" style="float:right;">완료</span></h5>
+            <h5>2014. 02. 14. 평강시 폭설 복구 지원  <span class="label label-default" style="float:right;">완료</span></h5>
           </li>
           <li class="list-group-item">
             <h5>2012. 02. 14. 우동산 산사태 <span class="label label-default" style="float:right;">완료</span></h5>
@@ -108,7 +168,7 @@
     
       <!-- FOOTER -->
       <footer>
-        <p align="center">&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        <p align="center">&copy; 2014 Veckon Co, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
       </footer>
 
     </div><!-- /.container -->

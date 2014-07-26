@@ -36,23 +36,64 @@
         </div>
       </div>
     </div>
-    <div style="margin-top:20px">
-      <div>
-        <table class="container" ><tr>
-          <td>고담시 수해 복구 지원</td>
-          <td >
-            <ul class="nav nav-pills-iv" role="tablist" id="myTab">
+    <div style="padding-top:20px;padding-bottom:5px;background-color:#ffc000">
+      <div class="container">
+      <div class="row">
+        <div class="col-lg-2"><p>고담시 수해 복구 지원</p></div>
+        <div class="col-lg-10">
+            <ul class="nav nav-pills" role="tablist" id="myTab">
               <li class="active"><a href="#home" role="tab" data-toggle="tab">현황 안내</a></li>
               
               <li><a href="#support" role="tab" data-toggle="tab">물품 지원</a></li>
               <li><a href="#volunteer" role="tab" data-toggle="tab">봉사 지원</a></li>
             </ul>
-          </td></tr>
-        </table>
+        </div>
       </div>
+    </div>
     </div>
     <div class="tab-content">
       <div class="tab-pane active" id="home">
+        <style type="text/css">
+/*
+      body {
+   
+      }*/
+
+      /* Custom container */
+      .container-narrow {
+             padding-top: 20px;
+        padding-bottom: 40px;
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    
+        </style>
+        <div class="container-narrow">
         <table border="0">
           <tr>
             <td colspan="2">
@@ -94,7 +135,7 @@
           </tr>
 
         </table>
-        
+        </div>
       </div>
       
       <div class="tab-pane" id="support">
