@@ -34,9 +34,10 @@
                 if(dsID){
                     console.log(dsID);
                     gapi.client.neo2rewa.disasterApi.findOne({id:dsID}).execute(function(resp){
+                        console.log(resp);
                         dsInfo = resp;
-                        $('#dsTitle').val(resp.title);
-                        $('#dsDesc').text(resp.description.value);
+                        $('#dsTitle').val(decodeURIComponent(resp.title));
+                        $('#dsDesc').text(decodeURIComponent(resp.description.value));
 
                         google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -47,6 +48,12 @@
                                     have = getInt(resp.haveSupplies[supID]);
                                 }
                                 addSupply(supID, have, getInt(resp.needSupplies[supID]));
+                            }
+                        }
+
+                        for(var jobID in resp.jobIDs){
+                            if(jobID != null && jobID && jobID != 'null'){
+                                addVolunteer(jobIDs);
                             }
                         }
 
@@ -104,7 +111,7 @@
             });
         }
 
-        function addVolunteer(volID_, have_, needs_){
+        function addVolunteer(volID_){
             var supHTML = "<div class=\"panel panel-default\">"+
                     "<div class=\"panel-heading\">"+
                     "<h4 class=\"panel-title\">"+
@@ -134,13 +141,13 @@
                     "</div>";
             var row = $(supHTML).appendTo($('#volunteerPanel'));
 
-            gapi.client.neo2rewa.supplyApi.findOne({id:supplyID_}).execute(function(resp){
+            gapi.client.neo2rewa.jobApi.findOne({id:volID_}).execute(function(resp){
                 console.log(resp);
                 $('a[name=volType]', row).text(decodeURIComponent(resp.type));
                 $('td[name=volType]', row).text(decodeURIComponent(resp.type));
-                $('td[name=volDesc]', row).text(decodeURIComponent(resp.description.value));
-                $('span[name=have]',row).text(have_);
-                $('span[name=needs]',row).text(needs_);
+                $('td[name=volDesc]', row).text(decodeURIComponent(resp.desc.value));
+                $('span[name=have]',row).text(resp.have);
+                $('span[name=needs]',row).text(resp.needs);
             });
         }
 
@@ -235,15 +242,28 @@
 
         var pos = new google.maps.LatLng(dsInfo.geoX, dsInfo.geoY);
 
+        var owner ="";
+        if(dsInfo.owner){
+            owner = dsInfo.owner;
+        }
+
         var infowindow = new google.maps.InfoWindow({
             map: map,
             position: pos,
-            content: "<span>구분:"+dsInfo.type+"<br>관할서:"+dsInfo.area+"<br>담당자:"+dsInfo.owner+"<br>개요:<br>"+dsInfo.description.value+"</span>"
+            content: "<span>구분:"+typeStr(dsInfo.type)+"<br>관할서:"+decodeURIComponent(dsInfo.area)+"<br>담당자:"+owner+"<br>개요:<br>"+decodeURIComponent(dsInfo.description.value)+"</span>"
         });
 
         map.setCenter(pos);
 
         $('#map-canvas').css('height','600px');
+    }
+
+    function typeStr(type_){
+        if(type_=='NATURAL'){
+            return "자연재해";
+        }else{
+            return "사고";
+        }
     }
 </script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>

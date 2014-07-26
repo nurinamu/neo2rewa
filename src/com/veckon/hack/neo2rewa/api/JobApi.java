@@ -25,7 +25,7 @@ public class JobApi {
 	}
 	@ApiMethod(path="/job/{id}",httpMethod=HttpMethod.GET)
 	public Job findOne(@Named("id") String id){
-		return ofy().load().type(Job.class).filterKey(id).first().now();
+		return ofy().load().type(Job.class).filterKey(Key.create(Job.class, id)).first().now();
 	}
 	
 	@ApiMethod(path="/job",httpMethod=HttpMethod.POST)

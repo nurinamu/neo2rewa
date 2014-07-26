@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>재난 등록 페이지입니다.</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -37,9 +38,9 @@
                 description:encodeURIComponent($('#dsDesc').val()),
                 type:$('#dsType').val(),
                 owner:$('#dsOwner').val(),
-                area:$('#dsArea').val(),
+                area:encodeURIComponent($('#dsArea').val()),
                 needSupplies:getSupplies(),
-                needVolunteers:vols_,
+                jobIDs:vols_,
                 geoX:disasterLocation.lat().toFixed(6),
                 geoY:disasterLocation.lng().toFixed(6),
                 issueDate:new Date().getTime()
@@ -248,8 +249,8 @@
                 <div class="form-group">
                     <label for="dsType">재난 구분</label>
                     <select class="form-control" id="dsType">
-                        <option type="NATURAL">자연재해</option>
-                        <option type="ACCIDENT">사고</option>
+                        <option value="NATURAL">자연재해</option>
+                        <option value="ACCIDENT">사고</option>
                     </select>
                 </div>
                 <div class="form-group">
