@@ -33,14 +33,16 @@
 
         function addDisaster(vols_){
             gapi.client.neo2rewa.disasterApi.save({
+                title:encodeURIComponent($('#dsTitle').val()),
                 description:encodeURIComponent($('#dsDesc').val()),
-                type:$('#dsTYpe').val(),
+                type:$('#dsType').val(),
                 owner:$('#dsOwner').val(),
                 area:$('#dsArea').val(),
                 needSupplies:getSupplies(),
                 needVolunteers:vols_,
                 geoX:disasterLocation.lat().toFixed(6),
-                geoY:disasterLocation.lng().toFixed(6)
+                geoY:disasterLocation.lng().toFixed(6),
+                issueDate:new Date().getTime()
             }).execute(function(resp){
                 alert("재난 구호 정보가 입력되었습니다.");
             });
@@ -204,6 +206,27 @@
     </script>
 </head>
 <body>
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">착한 중개인</a>
+        </div>
+        <div class="col-lg-8"></div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/page/login.html">로그인</a></li>
+                <li><a href="/page/register.html">회원가입</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="page-header col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
         <h1>재난 정보 등록 <small>재난 구호를 위한 정보를 입력바랍니다.</small></h1>
@@ -214,8 +237,12 @@
         <div>
             <form role="form">
                 <div class="form-group">
+                    <label for="dsTitle">재난명</label>
+                    <input type="text" class="form-control" id="dsTitle" placeholder="재난명을 입력하세요">
+                </div>
+                <div class="form-group">
                     <label for="dsDesc">재난 개요</label>
-                    <textarea class="form-control" id="dsDesc" placeholder="재난 상세 개요를 입력해주십시요." rows="12"></textarea>
+                    <textarea class="form-control" id="dsDesc" placeholder="재난 상세 개요를 입력해주십시요." rows="9"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="dsType">재난 구분</label>
