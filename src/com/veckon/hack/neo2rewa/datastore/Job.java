@@ -2,7 +2,6 @@ package com.veckon.hack.neo2rewa.datastore;
 
 import com.google.appengine.api.datastore.Text;
 import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class Job extends EntityData {
