@@ -6,11 +6,14 @@ import java.util.Map;
 import com.google.appengine.api.datastore.Text;
 import com.googlecode.objectify.annotation.EmbedMap;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Index;
 
 
 @Entity
 public class Disaster extends EntityData{
-    
+
+    String title;
+    @Index
     long issueDate;
     String geoX;
     String geoY;
@@ -121,6 +124,22 @@ public class Disaster extends EntityData{
 
     public void setJobs(List<String> jobs) {
         this.jobIDs = jobs;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<String> getJobIDs() {
+        return jobIDs;
+    }
+
+    public void setJobIDs(List<String> jobIDs) {
+        this.jobIDs = jobIDs;
     }
 
 }

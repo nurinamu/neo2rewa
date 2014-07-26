@@ -6,6 +6,9 @@ import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class Supply extends EntityData{
+    
+    String title;
+    
     String name;
     
     @Index
@@ -39,5 +42,13 @@ public class Supply extends EntityData{
 
     public void setDescription(Text description) {
         this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
