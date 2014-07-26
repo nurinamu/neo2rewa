@@ -47,6 +47,11 @@
                             console.log(resp);
                             alert('사용자가 등록되었습니다.');
                             clear();
+                        	var refer= location.href.replace(location.protocal
+               					 + "//"
+               					 + location.host
+               					 + location.pathname,"").split("=")[1]
+               			 location.href = refer;
                         });
             });
         }

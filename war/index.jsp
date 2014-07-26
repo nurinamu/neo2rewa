@@ -34,8 +34,8 @@
             
             <div class="navbar-collapse collapse" >
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="#about">로그인</a></li>
-                <li><a href="#contact">회원가입</a></li>
+                <li><a href="javascript:void(0);" id="login">로그인</a></li>
+                <li><a href="javascript:void(0);" id = "join">회원가입</a></li>
                 
               </ul>
             </div>
@@ -171,8 +171,27 @@
         <p align="center">&copy; 2014 Veckon Co, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
       </footer>
 
-    </div><!-- /.container -->
+  
 
+<div class="modal fade" id="loginModal">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 60%;
+margin-left: 20%;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Login</h4>
+      </div>
+      <div class="modal-body">
+        <input type="email" class="form-control email" placeholder="Email address" required="" autofocus="">
+        <input type="password" class="form-control password" placeholder="Password" required="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary signin">Signin</button>
+       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -181,4 +200,42 @@
     <script src="/js/bootstrap.min.js"></script>
    
   </body>
+<script>
+	function init(){
+	            var ROOT = '/_ah/api';
+	            gapi.client.load('neo2rewa', 'v1', function() {
+	                initFunc();
+	            }, ROOT);
+	}
+    function initFunc(){	
+		$('#login').click(function(e){
+			//$('#loginModal').modal();
+			location.href = "/page/login.html?refer="+location.href;
+		});
+		$('#loginModal .signin').click(function(e){
+			console.log("signin click");
+			var email = $('#loginModal .modal-body .email').val(),
+			password = $('#loginModal .modal-body .email').val();
+			console.log("email : " + email + ", password : " + password);
+			gapi.client.neo2rewa.loginApi.login({
+					'email' : email,
+					'password' : 'password'
+				}).execute(function(resp){
+					console.log(resp);
+					if(resp.result == 'fail'){
+						alert(resp.error);
+					}else{
+						alert(resp.error);
+					}
+				});
+		});
+		$('#join').click(function(e){
+			var refer = location.href;
+			location.href = '/page/register.html?refer='+ refer;
+		});
+   	}	
+</script>  
+  
+
+<script src="https://apis.google.com/js/client.js?onload=init"></script>
 </html>
