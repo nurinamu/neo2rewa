@@ -15,7 +15,7 @@ import static com.veckon.hack.neo2rewa.objectify.OfyService.ofy;
 @Api(name="neo2rewa",version="v1")
 public class UserApi {
 @ApiMethod(path="/user",httpMethod=HttpMethod.GET)
-	public List<User> findAll(@Named(value="permision") @DefaultValue(value="") String permission){
+	public List<User> findAll(@Named(value="permission") @DefaultValue(value="") String permission){
 		if("".equals(permission)){
 			return ofy().load().type(User.class).list();
 		}else{
@@ -38,7 +38,7 @@ public class UserApi {
 		}
 	}
 
-	@ApiMethod(path="/user",httpMethod=HttpMethod.DELETE)
+	@ApiMethod(path="/user/{id}",httpMethod=HttpMethod.DELETE)
 	public Result delete(@Named("id") String id){
 		ofy().delete().type(User.class).id(Long.parseLong(id)).now();
 		User getUser = ofy().load().type(User.class).filterKey(id).first().now();

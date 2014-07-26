@@ -17,7 +17,8 @@ public class Disaster extends EntityData{
     String geoY;
     Text description;
     DisasterType type;
-    Key<User> owner;
+    
+    //Key<User> owner;
     String area;
     
     @EmbedMap
@@ -29,7 +30,8 @@ public class Disaster extends EntityData{
     @EmbedMap
     Map<Key<Supply>, Long> usedSupplies;
     
-    List<Key<Job>> jobs;
+   // List<Key<Job>> jobs;
+    
     
     public enum DisasterType{
         NATURAL, ACCIDENT
@@ -100,13 +102,13 @@ public class Disaster extends EntityData{
     }
 
 
-    public Key<User> getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Key<User> owner) {
-        this.owner = owner;
-    }
+//    public Key<User> getOwner() {
+//        return owner;
+//    }
+//
+//    public void setOwner(Key<User> owner) {
+//        this.owner = owner;
+//    }
 
     public String getArea() {
         return area;
@@ -116,12 +118,12 @@ public class Disaster extends EntityData{
         this.area = area;
     }
 
-    public List<Key<Job>> getJobs() {
-        return jobs;
-    }
-
-    public void setJobs(List<Key<Job>> jobs) {
-        this.jobs = jobs;
-    }
+//    public List<Key<Job>> getJobs() {
+//        return jobs;
+//    }
+//
+//    public void setJobs(List<Key<Job>> jobs) {
+//        this.jobs = jobs;
+//    }
 
 }

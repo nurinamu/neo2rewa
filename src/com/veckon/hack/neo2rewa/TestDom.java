@@ -22,6 +22,7 @@ public class TestDom {
 		HttpURLConnection conn = (HttpURLConnection) new URL("http://www.1365.go.kr/nanum/prtl/web/vols/vol/selectWrkList.do?menuNo=P9140").openConnection();
 		conn.setRequestMethod("POST");
 		
+		System.out.println("Test");
 		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		
 		String line = "";
@@ -29,16 +30,23 @@ public class TestDom {
 		while((line = br.readLine()) !=null){
 			sb.append(line);
 		}
+		conn.disconnect();
 		System.out.println(sb.toString());
 		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(conn.getInputStream());
 		NodeList table = doc.getElementsByTagName("table");
 		int tlength = table.getLength();
+		System.out.println(tlength);
 		for(int tab=0;tab < tlength;tab++){
 			NodeList trs = ((Element)table.item(tab)).getElementsByTagName("tr");
 			int trlength = trs.getLength();
-			for(int tr =0;tr < trlength;tr ++){
-		//		NodeList tds = trs.item(tr);
-				
+			for(int tri =0;tri < trlength;tri ++){
+				NodeList tds = ((Element)trs.item(tri)).getElementsByTagName("td");
+				String num = ((Element)tds.item(0).getFirstChild()).getAttribute("alt"); // Number
+				String title = ((Element)tds.item(1).getFirstChild()).getTextContent(); // Title
+				String organ = tds.item(2).getTextContent(); // Organization
+				String time = tds.item(3).getTextContent(); // Time Limit
+				String status = ((Element)tds.item(4).getFirstChild()).getAttribute("alt"); // Status Ing / End
+				System.out.println(num + ","+title+","+organ+","+time+","+status);
 			}
 		}
 		} catch (IOException | SAXException | ParserConfigurationException e) {

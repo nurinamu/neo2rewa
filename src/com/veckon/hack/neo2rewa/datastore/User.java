@@ -1,5 +1,7 @@
 package com.veckon.hack.neo2rewa.datastore;
 
+import javax.jdo.annotations.PrimaryKey;
+
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Index;
 
@@ -8,6 +10,7 @@ public class User extends EntityData{
     
     String name;
     String phone;
+    
     @Index
     String email;
     String password;

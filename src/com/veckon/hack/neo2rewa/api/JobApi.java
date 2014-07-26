@@ -32,13 +32,13 @@ public class JobApi {
 		ofy().save().entity(job).now();
 		Job getJob = ofy().load().entity(job).now();
 		if(getJob != null){
-			return new Result("success",job.getId());
+			return new Result("success",job.getId().toString());
 		}else{
 			return new Result("fail","confirm App Engine Server");
 		}
 	}
 
-	@ApiMethod(path="/job",httpMethod=HttpMethod.DELETE)
+	@ApiMethod(path="/job/{id}",httpMethod=HttpMethod.DELETE)
 	public Result delete(@Named("id") String id){
 		ofy().delete().type(Job.class).id(Long.parseLong(id)).now();
 		Job getJob = ofy().load().type(Job.class).filterKey(id).first().now();

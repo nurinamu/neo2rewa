@@ -18,7 +18,7 @@ public class LoginApi {
 
 @ApiMethod(path="/login",httpMethod=HttpMethod.POST)
 	public Login login(User user){
-		User userinfo = ofy().load().type(User.class).filter("email==", user.getName()).first().now();
+		User userinfo = ofy().load().type(User.class).filter("email", user.getEmail()).first().now();
 		if(userinfo == null) {
 			return new Login(false,"fail","not exist loginid");
 		}
